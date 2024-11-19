@@ -65,4 +65,19 @@ public class TecServiceImplementacion implements TecnicaturaService {
         return ResponseEntity.badRequest().build();
     }
 
+    @Override
+    public ResponseEntity<Tecnicatura> deleteTec(Integer id) {
+        try {
+            Optional<Tecnicatura> existTec = tecnicaturaRepository.findById(id);
+            if(existTec.isPresent()){
+                Tecnicatura tecnicatura = existTec.get();
+                tecnicaturaRepository.delete(tecnicatura);
+                return ResponseEntity.ok(tecnicatura);
+            }            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
 }
