@@ -1,10 +1,14 @@
 package com.ingenieriaII.api.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tecnicatura {
+public class Tecnicatura implements Sujeto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -22,4 +26,28 @@ public class Tecnicatura {
     private int duracion;
     private int cantidadAsignaturas;
     private String numeroResolucion;
+
+    @OneToMany
+    private List<Alumno> alumnos = new ArrayList<>();
+
+    @Override
+    public void agregarObservador(Alumno observador) {
+        alumnos.add(observador);
+    }
+    @Override
+    public void eliminarObservador(Alumno observador) {
+        alumnos.remove(observador);
+    }
+    @Override
+    public void notificarObservadores() {
+        for (Alumno alumno : alumnos) {
+            alumno.actualizar("Nueva resolución en la tecnicatura: " + numeroResolucion);
+        }
+    }
+
+    // Método para simular algún cambio en la tecnicatura
+    public void actualizarTecnicatura(String nuevoNombre) {
+        this.numeroResolucion = nuevoNombre;
+        notificarObservadores();  // Notificar a todos los alumnos que hubo un cambio
+    }
 }
