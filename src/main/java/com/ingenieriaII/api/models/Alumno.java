@@ -2,25 +2,24 @@ package com.ingenieriaII.api.models;
 
 import jakarta.persistence.Entity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Alumno extends Persona implements Observador{
 
     private String tituloSecundario;
     private String escuelaSecundaria;
     private Integer anioEgreso;
-
-    public Alumno(Integer id,String nombre,String apellido,String dniPasaporte,String genero,String email,String telefono,String partido,String calle,String numero,String departamento,String pasillo,String pais,String localidad,Integer piso,String tituloSecundario, String escuelaSecundaria, Integer anioEgreso) {
-        super(id,nombre,apellido,dniPasaporte,genero,email,telefono,partido,calle,numero,departamento,pasillo,pais,localidad,piso);
-        this.tituloSecundario = tituloSecundario;
-        this.escuelaSecundaria = escuelaSecundaria;
-        this.anioEgreso = anioEgreso;
-    }
-
+    private String resolucion;
+    private boolean estadoResolucion;
     @Override
-    public void actualizar(String mensaje) {
+    public void actualizar(String numResolucion) {
         System.out.println("actualizarce");
+        if(!numResolucion.equals(this.resolucion)){
+            this.estadoResolucion = false;
+        }
     }
     
     

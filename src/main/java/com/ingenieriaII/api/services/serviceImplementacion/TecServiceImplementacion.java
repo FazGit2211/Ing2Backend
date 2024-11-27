@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.ingenieriaII.api.models.Alumno;
 import com.ingenieriaII.api.models.Tecnicatura;
+import com.ingenieriaII.api.repositorys.AlumnoRepository;
 import com.ingenieriaII.api.repositorys.TecnicaturaRepository;
 import com.ingenieriaII.api.services.TecnicaturaService;
 
@@ -16,6 +18,9 @@ public class TecServiceImplementacion implements TecnicaturaService {
 
     @Autowired
     private TecnicaturaRepository tecnicaturaRepository;
+
+    @Autowired
+    private AlumnoRepository alumnoRepository;
 
     @Override
     public ResponseEntity<Tecnicatura> createTec(Tecnicatura tecnicatura) {
@@ -73,6 +78,26 @@ public class TecServiceImplementacion implements TecnicaturaService {
                 Tecnicatura tecnicatura = existTec.get();
                 tecnicaturaRepository.delete(tecnicatura);
                 return ResponseEntity.ok(tecnicatura);
+            }            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @Override
+    public ResponseEntity<Tecnicatura> addAluTec(Integer idTecnicatura, Integer idAlumno) {
+        try {
+            Optional<Tecnicatura> existTec = tecnicaturaRepository.findById(idTecnicatura);
+            Optional<Alumno> existAlumno = alumnoRepository.findById(idAlumno);
+            if(existTec.isPresent() && existAlumno.isPresent()){
+                Tecnicatura tecnicaturaActual = existTec.get();
+                Alumno alumno = existAlumno.get();
+                alumno.setResolucion(tecnicaturaActual.getNumeroResolucion());
+                alumno.setEstadoResolucion(true);
+                tecnicaturaActual.agregarObservador(alumno);
+                tecnicaturaRepository.save(tecnicaturaActual);
+                return ResponseEntity.ok(tecnicaturaActual);
             }            
         } catch (Exception e) {
             System.out.println(e);

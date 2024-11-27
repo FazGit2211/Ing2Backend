@@ -1,5 +1,7 @@
 package com.ingenieriaII.api.services.serviceImplementacion;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,11 @@ public class AluServiceImplementacion implements AlumnoService {
             System.out.println(e);
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @Override
+    public List<Alumno> getAllAlumnos() {
+        return alumnoRepository.findAll();
     }
 
 }

@@ -47,4 +47,11 @@ public class TecnicaturaController {
     public ResponseEntity<Tecnicatura> deleteById(@PathVariable Integer id){
         return tecnicaturaService.deleteTec(id);
     }
+
+    @PutMapping("/addAlumno/{idTecnicatura}/{idAlumno}")
+    public ResponseEntity<Tecnicatura> addAlumnoTecnicatura(@PathVariable Integer idTecnicatura, @PathVariable Integer idAlumno){
+        return tecnicaturaService.addAluTec(idTecnicatura,idAlumno);
+    }
+
+    
 }
