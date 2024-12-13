@@ -4,6 +4,7 @@ package com.ingenieriaII.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,7 @@ import com.ingenieriaII.api.models.Alumno;
 import com.ingenieriaII.api.services.AlumnoService;
 
 @RestController
-@RequestMapping("/alumno")
+@RequestMapping(value = "/alumno",produces = MediaType.APPLICATION_JSON_VALUE)
 public class AlumnoController {
 
     @Autowired

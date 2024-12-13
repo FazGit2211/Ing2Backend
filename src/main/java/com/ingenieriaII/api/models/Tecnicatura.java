@@ -26,6 +26,8 @@ public class Tecnicatura implements Sujeto {
     private int duracion;
     private int cantidadAsignaturas;
     private String numeroResolucion;
+    private String fechaVigencia;
+    private String fechaCaducidad;
 
     @OneToMany
     private List<Alumno> alumnos = new ArrayList<>();
@@ -41,7 +43,7 @@ public class Tecnicatura implements Sujeto {
     @Override
     public void notificarObservadores() {
         for (Alumno alumno : alumnos) {
-            alumno.actualizar("Nueva resolución en la tecnicatura: " + numeroResolucion);
+            alumno.actualizar(numeroResolucion,fechaVigencia,fechaCaducidad);
         }
     }
 
