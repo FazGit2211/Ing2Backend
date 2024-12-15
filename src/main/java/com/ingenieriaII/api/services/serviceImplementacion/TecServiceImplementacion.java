@@ -47,6 +47,9 @@ public class TecServiceImplementacion implements TecnicaturaService {
                 tecnicaturaActual.setDuracion(tecnicatura.getDuracion());
                 tecnicaturaActual.setCantidadAsignaturas(tecnicatura.getCantidadAsignaturas());
                 tecnicaturaActual.setNumeroResolucion(tecnicatura.getNumeroResolucion());
+                tecnicaturaActual.setFechaVigencia(tecnicatura.getFechaVigencia());
+                tecnicaturaActual.setFechaCaducidad(tecnicatura.getFechaCaducidad());
+                tecnicaturaActual.actualizarTecnicatura(tecnicatura.getNumeroResolucion());
                 // Guardar la tecnicatura actualizada
                 Tecnicatura updatedTecnicatura = tecnicaturaRepository.save(tecnicaturaActual);
                 // Retornar la respuesta con el objeto actualizado
@@ -95,6 +98,7 @@ public class TecServiceImplementacion implements TecnicaturaService {
                 Alumno alumno = existAlumno.get();
                 alumno.setResolucion(tecnicaturaActual.getNumeroResolucion());
                 alumno.setEstadoResolucion(true);
+                alumno.setEstadoVigenciaResolucion("activa");
                 tecnicaturaActual.agregarObservador(alumno);
                 tecnicaturaRepository.save(tecnicaturaActual);
                 return ResponseEntity.ok(tecnicaturaActual);
