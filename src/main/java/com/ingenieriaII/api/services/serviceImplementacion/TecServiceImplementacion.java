@@ -25,6 +25,8 @@ public class TecServiceImplementacion implements TecnicaturaService {
     @Override
     public ResponseEntity<Tecnicatura> createTec(Tecnicatura tecnicatura) {
         try {
+            Tecnicatura tecnicaturaTemporal = tecnicatura;
+            System.out.println(tecnicaturaTemporal.toString());
             return ResponseEntity.ok(tecnicaturaRepository.save(tecnicatura));
         } catch (Exception e) {
             System.out.println(e);
@@ -47,9 +49,9 @@ public class TecServiceImplementacion implements TecnicaturaService {
                 tecnicaturaActual.setDuracion(tecnicatura.getDuracion());
                 tecnicaturaActual.setCantidadAsignaturas(tecnicatura.getCantidadAsignaturas());
                 tecnicaturaActual.setNumeroResolucion(tecnicatura.getNumeroResolucion());
-                tecnicaturaActual.setEstadoVigencia(tecnicaturaActual.getEstadoVigencia());;
+                tecnicaturaActual.setEstadoVigencia(tecnicatura.getEstadoVigencia());;
                 tecnicaturaActual.setFechaCaducidad(tecnicatura.getFechaCaducidad());
-                tecnicaturaActual.actualizarTecnicatura(tecnicatura.getNumeroResolucion());
+                tecnicaturaActual.actualizarTecnicatura();
                 // Guardar la tecnicatura actualizada
                 Tecnicatura updatedTecnicatura = tecnicaturaRepository.save(tecnicaturaActual);
                 // Retornar la respuesta con el objeto actualizado
@@ -97,7 +99,7 @@ public class TecServiceImplementacion implements TecnicaturaService {
                 Tecnicatura tecnicaturaActual = existTec.get();
                 Alumno alumno = existAlumno.get();
                 alumno.setResolucion(tecnicaturaActual.getNumeroResolucion());
-                alumno.setEstadoResolucion("EN VIGENCIA");;
+                alumno.setEstadoResolucion(tecnicaturaActual.getEstadoVigencia());;
                 tecnicaturaActual.agregarObservador(alumno);
                 tecnicaturaRepository.save(tecnicaturaActual);
                 return ResponseEntity.ok(tecnicaturaActual);
