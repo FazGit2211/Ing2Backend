@@ -49,7 +49,8 @@ public class TecServiceImplementacion implements TecnicaturaService {
                 tecnicaturaActual.setDuracion(tecnicatura.getDuracion());
                 tecnicaturaActual.setCantidadAsignaturas(tecnicatura.getCantidadAsignaturas());
                 tecnicaturaActual.setNumeroResolucion(tecnicatura.getNumeroResolucion());
-                tecnicaturaActual.setEstadoVigencia(tecnicatura.getEstadoVigencia());;
+                tecnicaturaActual.setEstadoVigencia(tecnicatura.getEstadoVigencia());
+                ;
                 tecnicaturaActual.setFechaCaducidad(tecnicatura.getFechaCaducidad());
                 tecnicaturaActual.actualizarTecnicatura();
                 // Guardar la tecnicatura actualizada
@@ -79,11 +80,11 @@ public class TecServiceImplementacion implements TecnicaturaService {
     public ResponseEntity<Tecnicatura> deleteTec(Integer id) {
         try {
             Optional<Tecnicatura> existTec = tecnicaturaRepository.findById(id);
-            if(existTec.isPresent()){
+            if (existTec.isPresent()) {
                 Tecnicatura tecnicatura = existTec.get();
                 tecnicaturaRepository.delete(tecnicatura);
                 return ResponseEntity.ok(tecnicatura);
-            }            
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -95,15 +96,34 @@ public class TecServiceImplementacion implements TecnicaturaService {
         try {
             Optional<Tecnicatura> existTec = tecnicaturaRepository.findById(idTecnicatura);
             Optional<Alumno> existAlumno = alumnoRepository.findById(idAlumno);
-            if(existTec.isPresent() && existAlumno.isPresent()){
+            if (existTec.isPresent() && existAlumno.isPresent()) {
                 Tecnicatura tecnicaturaActual = existTec.get();
                 Alumno alumno = existAlumno.get();
                 alumno.setResolucion(tecnicaturaActual.getNumeroResolucion());
-                alumno.setEstadoResolucion(tecnicaturaActual.getEstadoVigencia());;
+                alumno.setEstadoResolucion(tecnicaturaActual.getEstadoVigencia());
+                ;
                 tecnicaturaActual.agregarObservador(alumno);
                 tecnicaturaRepository.save(tecnicaturaActual);
                 return ResponseEntity.ok(tecnicaturaActual);
-            }            
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @Override
+    public ResponseEntity<Tecnicatura> removeAluTec(Integer idTecnicatura, Integer idAlumno) {
+        try {
+            Optional<Tecnicatura> existeTec = tecnicaturaRepository.findById(idTecnicatura);
+            if (existeTec.isPresent()) {
+                Optional<Alumno> existAlumno = alumnoRepository.findById(idAlumno);
+                Tecnicatura tecnicaturaActual = existeTec.get();
+                Alumno alumnoActual = existAlumno.get();
+                tecnicaturaActual.eliminarObservador(alumnoActual);
+                tecnicaturaRepository.save(tecnicaturaActual);
+                return ResponseEntity.ok(tecnicaturaActual);
+            }
         } catch (Exception e) {
             System.out.println(e);
         }

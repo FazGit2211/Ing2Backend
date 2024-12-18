@@ -54,5 +54,10 @@ public class TecnicaturaController {
         return tecnicaturaService.addAluTec(idTecnicatura,idAlumno);
     }
 
+    @DeleteMapping("/removeAlumno/{idTecnicatura}/{idAlumno}")
+    public ResponseEntity<Tecnicatura> removeAlumno(@PathVariable Integer idTecnicatura, @PathVariable Integer idAlumno){
+        return tecnicaturaService.removeAluTec(idTecnicatura, idAlumno);
+    }
+
     
 }

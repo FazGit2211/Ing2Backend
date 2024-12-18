@@ -12,4 +12,5 @@ public interface TecnicaturaService {
     ResponseEntity<Tecnicatura> findByIdTec(Integer id);
     ResponseEntity<Tecnicatura> deleteTec(Integer id);
     ResponseEntity<Tecnicatura> addAluTec(Integer idTecnicatura, Integer idAlumno);
+    ResponseEntity<Tecnicatura> removeAluTec(Integer idTecnicatura, Integer idAlumno);
 }

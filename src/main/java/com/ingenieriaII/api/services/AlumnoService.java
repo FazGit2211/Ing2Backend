@@ -9,4 +9,5 @@ public interface AlumnoService {
 
     ResponseEntity<Alumno> createAlumno(Alumno alumno);
     List<Alumno> getAllAlumnos();
+    ResponseEntity<Alumno> deleteAlumno(Integer alumnoId);
 }
