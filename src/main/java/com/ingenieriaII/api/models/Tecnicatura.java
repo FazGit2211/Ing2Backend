@@ -46,13 +46,12 @@ public class Tecnicatura implements Sujeto {
     @Override
     public void notificarObservadores() {
         for (Alumno alumno : alumnos) {
-            alumno.actualizar(numeroResolucion, estadoVigencia, fechaCaducidad);
+            alumno.actualizar(estadoVigencia, fechaCaducidad);
         }
     }
 
     // Método para simular algún cambio en la tecnicatura
-    public void actualizarTecnicatura(String nuevoNombre) {
-        this.numeroResolucion = nuevoNombre;
+    public void actualizarTecnicatura() {        
         notificarObservadores(); // Notificar a todos los alumnos que hubo un cambio
     }
 }

@@ -16,9 +16,9 @@ public class Alumno extends Persona implements Observador{
     private String estadoResolucion;
     private String fechaCaducidadResolucion;
     @Override
-    public void actualizar(String numResolucion, String estadoVigencia, String fechaCaducidad) {
+    public void actualizar(String estadoVigencia, String fechaCaducidad) {
         System.out.println("actualizarce");
-        if(!numResolucion.equals(this.resolucion)){
+        if(!estadoVigencia.equals(estadoResolucion)){
             this.estadoResolucion = estadoVigencia;
             this.fechaCaducidadResolucion = fechaCaducidad;
         }
